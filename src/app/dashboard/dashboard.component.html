@@ -1,0 +1,57 @@
+<div class="container">
+    <app-navigation></app-navigation>
+    <div class="content">
+        <div class="card" style="width: 100%">
+            <h1 style="font-weight: bold; text-align: center; margin-top: 30px;">Sales Reps</h1>
+            <div class="card-header">
+                
+                <select class="form-select" [(ngModel)]="selectedUserName" (change)="fetchData()">
+                    <option value="">Select User Name</option>
+                    <option *ngFor="let user of users" [value]="user.name">{{ user.name }}</option>
+                </select>
+                <!-- Dropdown for Sales Area -->
+                <select class="form-select" [(ngModel)]="selectedSalesArea" (change)="fetchData()">
+                    <option value="">Select Sales Area</option>
+                    <option *ngFor="let area of salesAreas" [value]="area">{{ area }}</option>
+                </select>
+                <button class="btn btn-success" (click)="openCreateModal()">+&nbsp;&nbsp;Add Sales Reps</button>
+            </div>
+            <div class="card-body">
+                <table datatable [dtOptions]="dtOptions" class="row-border hover table table-striped table-bordered">
+                    <thead class="bg-dark text-white">
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Website</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of users$">
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.website }}</td>
+                            <td style="width: 30%">
+                                <a (click)="editSalesRep(user.id)"><mat-icon>edit</mat-icon></a> |
+                                <a (click)="onDeleteClick()"><mat-icon>delete</mat-icon></a> |
+                                <a><mat-icon>visibility</mat-icon></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Preview Invoice : <b></b></h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+	</div>
+	
+	<div class="modal-footer">
+		<button type="button" class="btn btn-danger" (click)="d('Cross click')">Close</button>
+	</div>
+</ng-template>

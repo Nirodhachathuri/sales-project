@@ -1,0 +1,62 @@
+<mat-sidenav-container class="sidenav-container" style="background-color: white; font-family: 'Gilroy';">
+    <mat-sidenav #drawer class="sidenav" fixedInViewport
+        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'"
+        [opened]="(isHandset$ | async) === false" style="background-color: #6a68e2; font-family: 'Gilroy';">
+      <!-- <mat-toolbar>Menu</mat-toolbar> -->
+      <!-- <mat-nav-list style="margin-top: 80px;">
+        <a mat-list-item href="#Home" style="margin-bottom: 30px; font-family: 'Gilroy';">Home</a>
+        <a mat-list-item href="#about" style="margin-bottom: 30px; font-family: 'Gilroy';">About</a>
+        <a mat-list-item href="#" style="margin-bottom: 30px; font-family: 'Gilroy';">Projects</a>
+        <a mat-list-item href="#" style="margin-bottom: 30px; font-family: 'Gilroy';">Research Expereince</a>
+      </mat-nav-list> -->
+      <mat-nav-list style="margin-top: 100px; ">
+        <a mat-list-item routerLink="/dashboard" style="margin-top: 30px;color: #fcfcfd;">
+          <mat-icon style="color: #fcfcfd;">money</mat-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <span style="margin-left: 10px; font-family: 'Gilroy';">Sales Reps</span>
+        </a>
+        <a mat-list-item routerLink="/customers" style="margin-top: 30px;color: #fcfcfd;">
+          <mat-icon style="color: #fcfcfd;">people</mat-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <span style="margin-left: 10px; font-family: 'Gilroy';">Customers</span>
+        </a>
+        <a mat-list-item href="/orders" style="margin-top: 30px;color: #fcfcfd;">
+          <mat-icon style="color: #fcfcfd;">shopping_cart</mat-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <span style="margin-left: 10px; font-family: 'Gilroy';">Orders</span>
+        </a>
+        <a mat-list-item href="/payments" style="margin-top:30px;color: #fcfcfd;">
+          <mat-icon style="color: #fcfcfd;">payments</mat-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <span style="margin-left: 10px; font-family: 'Gilroy';">Payments</span>
+        </a>
+        <a mat-list-item href="/inventory" style="margin-top:30px;color: #fcfcfd;">
+          <mat-icon style="color: #fcfcfd;">inventory</mat-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <span style="margin-left: 10px; font-family: 'Gilroy';">Inventory</span>
+        </a>
+      </mat-nav-list>
+      
+    </mat-sidenav>
+    
+    <mat-sidenav-content>
+      <mat-toolbar color="primary" style="background-color: #fcfcfd;">
+        <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()"
+          *ngIf="isHandset$ | async">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <!-- <span>portfolio</span> -->
+      </mat-toolbar> 
+      <!-- <app-home></app-home>
+      <app-about></app-about>
+      <app-project></app-project>
+      <app-research></app-research>
+      <app-experience></app-experience>
+      <app-skills></app-skills>
+      <app-footer></app-footer> -->
+  
+      <!-- Add Content Here -->
+    </mat-sidenav-content>
+   
+  </mat-sidenav-container>
+  

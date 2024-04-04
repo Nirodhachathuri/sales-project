@@ -1,0 +1,41 @@
+<!-- <div class="log-fm">
+  <h1>Login</h1>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <input matInput placeholder="Username" formControlName="username" required>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input matInput type="password" placeholder="Password" formControlName="password" required>
+    </mat-form-field>
+    <br>
+    <mat-checkbox formControlName="rememberMe">Remember Me</mat-checkbox>Add checkbox for "Remember Me" -->
+    <!-- <br>
+    <button type="submit" class="btn" [disabled]="loginForm.invalid">Login</button>
+  </form>
+</div> --> 
+
+
+<!-- login.component.html -->
+
+<div class="container">
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title>Login</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form (ngSubmit)="login()">
+        <mat-form-field>
+          <input matInput placeholder="Username" name="username" [(ngModel)]="username" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="password" placeholder="Password" name="password" [(ngModel)]="password" required>
+        </mat-form-field>
+        <mat-checkbox [(ngModel)]="rememberMe">Remember Me</mat-checkbox>
+        <button mat-raised-button color="primary" type="submit">Login</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+  
