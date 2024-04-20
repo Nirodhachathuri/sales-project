@@ -1,22 +1,22 @@
 .container {
     margin: 0;
     padding: 0;
-  }
-  
-  
-  .app-navigation {
+}
+
+
+.app-navigation {
     position: absolute;
     top: 0;
     left: 0;
     margin: 0;
     padding: 0;
-  }
-  
-  .content {
+}
+
+.content {
     margin-top: 0;
     margin-left: 250px; /* Adjust according to app-navigation width */
     padding: 20px; /* Add padding to the content area */
-  }
+}
 
 
 .card-header {
@@ -38,11 +38,49 @@
     border: 1px solid #ced4da; /* Set border */
     border-radius: 0.25rem; /* Set border radius */
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; /* Add transition */
-  }
-
-.new-customer-btn {
-    /* Add styles for the New Customer button */
-    margin-right: auto; /* Align button to the right side */
+}
+.table {
+    width: 100%; /* Set table width to fill container */
 }
 
-  
+.datatable {
+    width: 100%; /* Set datatable width to fill container */
+}
+
+/* Media query for screens smaller than 992px (desktops) */
+@media (max-width: 992px) {
+    .content {
+        margin-left: 0; /* Remove left margin for smaller screens */
+        font-size: 8px;
+    }
+}
+@media (max-width: 576px) {
+    .table {
+        width: 200px; /* Set table width to auto for smaller screens */
+        font-size: 9px;
+    }
+    .datatable {
+        width: 200px; /* Set datatable width to auto for smaller screens */
+        font-size: 10px;
+    }
+}
+
+.new-customer-btn {
+    width: 100px; /* Set the default width of the button */
+    font-size: 12px; /* Default font size */
+
+    /* Add styles for the New Customer button */
+    /* margin-right: auto; Align button to the right side */
+}
+
+/* Media query for screens smaller than 768px (tablets) */
+@media (max-width: 768px) {
+    .form-select,
+    .new-customer-btn {
+        width: 100%; /* Set the button and dropdown width to fill the container */
+        font-size: 10px; /* Reduce font size for smaller screens */
+    }
+    td.mat-icon-cell {
+        font-size: 10px; /* Adjust icon size for smaller screens */
+    }
+}

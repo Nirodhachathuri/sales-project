@@ -4,6 +4,9 @@ import { Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ModelComponent } from '../model/model.component';
 import { DeleteModelComponent } from '../delete-model/delete-model.component';
+import * as DataTables from 'datatables.net';
+import { SalesComponent, SalesDeleteComponent } from './sales/sales.component';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -14,9 +17,13 @@ export class DashboardComponent implements OnInit {
   users: any[] = [];
   selectedUserName: string = '';
   selectedSalesArea: string = '';
-  dtOptions: DataTables.Settings = {};
+  dtOptions: any = {
+    pagingType: 'simple_numbers',
+    lengthMenu: [10, 25, 50, 100]
+    // Add other DataTables options as needed
+  };
   salesAreas: string[] = []; 
-  constructor( private data: AuthService,private dialog: MatDialog) {}
+    constructor( private data: AuthService,private dialog: MatDialog) {}
 
   ngOnInit():void {
     this.dtOptions = {
@@ -43,7 +50,7 @@ filteredData(){
   });
 }
 openCreateModal() {
-  const dialogRef = this.dialog.open(ModelComponent, {
+  const dialogRef = this.dialog.open(SalesComponent, {
     width: '400px', // Adjust the width as needed
   });
 
@@ -69,7 +76,7 @@ editSalesRep(userId: string) {
   }
 
   onDeleteClick(): void {
-    const dialogRef = this.dialog.open(DeleteModelComponent, {
+    const dialogRef = this.dialog.open(SalesDeleteComponent, {
       width: '250px',
       data: { message: 'Are you sure you want to delete this item?' }
     });

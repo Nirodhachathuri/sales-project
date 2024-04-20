@@ -14,7 +14,7 @@
                     <option value="">Select Sales Area</option>
                     <option *ngFor="let area of salesAreas" [value]="area">{{ area }}</option>
                 </select>
-                <button class="btn btn-success" (click)="openCreateModal()">+&nbsp;&nbsp;&nbsp;New Order</button>
+                <button class="new-customer-btn btn btn-success" (click)="openCreateModal()">+&nbsp;&nbsp;Order</button>
             </div>
             <div class="card-body">
                 <table datatable [dtOptions]="dtOptions" class="row-border hover table table-striped table-bordered">

@@ -1,0 +1,63 @@
+<form [formGroup]="userForm">
+    <h1>Edit System User </h1>
+  
+    <div class="form-row">
+      <div class="form-column">
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" id="name" name="name" [value]="userData.name">
+        </mat-form-field>
+      </div>
+  
+      <div class="form-column">
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" id="email" name="email"[value]="userData.email">
+        </mat-form-field>
+      </div>
+    </div>
+  
+    <div class="form-row">
+      <div class="form-column">
+        <mat-form-field>
+          <mat-label>User Name</mat-label>
+          <input matInput formControlName="username" id="username" name="username" [value]="userData.username">
+        </mat-form-field>
+      </div>
+      <div class="form-column">
+        <mat-form-field>
+            <mat-label>User Type</mat-label>
+            <mat-select formControlName="usertype" id="usertype" name="usertype" [value]="userData.usertype">
+              <mat-option value="admin">Admin</mat-option>
+              <mat-option value="salesRep">Sales Rep</mat-option>
+              <mat-option value="accountAdmin">Account Admin</mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  
+    <div class="form-row">
+      <div class="form-column">
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password" id="password" name="password" [value]="userData.password">
+        </mat-form-field>
+        <!-- <mat-error *ngIf="userForm.controls['cpassword'].hasError('mismatch')">Passwords do not match</mat-error> -->
+      </div>
+      <div class="form-column">
+        <mat-form-field>
+          <mat-label>Confirm Password</mat-label>
+          <input matInput type="password" formControlName="cpassword" id="cpassword" name="cpassword" [value]="userData.cpassword">
+          <!-- <mat-error *ngIf="userForm.hasError('passwordMismatch') && userForm.get('cpassword').touched">
+            Passwords do not match
+          </mat-error>  -->
+        </mat-form-field>
+      </div>
+    </div>
+  
+    <div class="button-container">
+      <!-- <button mat-button color="primary" type="submit" [disabled]="!userForm.dirty">Edit</button> -->
+      <button mat-button color="warn" type="button" (click)="cancel()">Ok</button>
+    </div>
+  </form>
+  

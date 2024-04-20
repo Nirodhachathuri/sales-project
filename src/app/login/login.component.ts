@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../service/auth.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-login',
@@ -12,7 +15,7 @@ export class LoginComponent implements OnInit {
   username: string;
   password: string;
   rememberMe: boolean;
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder,private authService : AuthService,private router: Router) {}
 
   ngOnInit() {
     this.loginForm = this.fb.group({
@@ -25,8 +28,16 @@ export class LoginComponent implements OnInit {
     // Handle login logic here
     console.log(this.loginForm.value);
   }
-  login() {
-    // Implement your login logic here
-    console.log('Logging in with username:', this.username, 'and password:', this.password);
+  login(): void {
+    this.authService.login(this.username, this.password)
+      .subscribe(response => {
+        // Handle the response from the backend
+        console.log('Login successful:', response);
+        this.router.navigate(['/user']);
+        // Optionally, redirect the user to another page
+      }, error => {
+        console.error('Error logging in:', error);
+        // Optionally, show an error message to the user
+      });
   }
 }

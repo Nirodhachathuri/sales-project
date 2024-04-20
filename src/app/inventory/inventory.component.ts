@@ -3,6 +3,9 @@ import { DeleteModelComponent } from '../delete-model/delete-model.component';
 import { ModelComponent } from '../model/model.component';
 import { AuthService } from '../service/auth.service';
 import { MatDialog } from '@angular/material/dialog';
+import { DeleteProductComponent, EditProductComponent, ProductNewComponent } from './product-new/product-new.component';
+import { ProductService } from '../service/product.service';
+
 
 @Component({
   selector: 'app-inventory',
@@ -11,68 +14,77 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class InventoryComponent implements OnInit {
 
-  users$: any[] = [];
-  users: any[] = [];
-  selectedUserName: string = '';
-  selectedSalesArea: string = '';
-  dtOptions: DataTables.Settings = {};
-  salesAreas: string[] = []; 
-  constructor( private data: AuthService,private dialog: MatDialog) {}
+  products$: any[] = [];
+  products: any[] = [];
+  selectedProductName: string = '';
+  dtOptions: any = {
+    pagingType: 'simple_numbers',
+    lengthMenu: [10, 25, 50, 100]
+    // Add other DataTables options as needed
+  };
+  
+  
+  
+  constructor(private productService: ProductService, private dialog: MatDialog) { }
 
-  ngOnInit():void {
-    this.dtOptions = {
-      pagingType: 'simple_numbers',
-     
-    };
-
-    this.salesAreas = ['Area 1', 'Area 2', 'Area 3']; // Example sales areas
+  ngOnInit(): void {
+    
+    
     this.fetchData();
   };
-fetchData(){
-  this.data.getSampleData().subscribe(data => {
-    this.users$ = data;
-    this.users = data;
-  });
-   const filteredUsers = this.filteredData();
-   this.users$ = filteredUsers;
-}
 
-filteredData(){
-  return this.users$.filter(user => {
-    return (!this.selectedUserName || user.name === this.selectedUserName) &&
-           (!this.selectedSalesArea || user.salesArea === this.selectedSalesArea);
-  });
-}
-openCreateModal() {
-  const dialogRef = this.dialog.open(ModelComponent, {
-    width: '400px', // Adjust the width as needed
-  });
+  fetchData() {
+  
+    this.productService.getAllProducts().subscribe(data => {
+      this.products$ = data;
+      this.products = data;
+    });
+     const filteredUsers = this.filteredData();
+     this.products$ = filteredUsers;
+  }
+  
+  filteredData() {
+    // Filter the products based on selected product name
+    return this.products$.filter(product => {
+      return (!this.selectedProductName || product.productname === this.selectedProductName);
+    });
+  }
 
-  dialogRef.afterClosed().subscribe(result => {
-    console.log(result);
-  });
-}
-
-editSalesRep(userId: string) {
-  // Fetch sales rep data based on salesRepId
-  // const salesRepData = /* fetch sales rep data */;
-  this.data.getSampleDataId(userId).subscribe(userData=> {
-    const dialogRef = this.dialog.open(ModelComponent, {
-      width: '400px', // adjust as needed
-      data: userData, // pass sales rep data to modal
+  openCreateModal() {
+    const dialogRef = this.dialog.open(ProductNewComponent, {
+      width: '400px', // Adjust the width as needed
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      // Handle modal close event if needed
+      console.log(result);
     });
-  });
   }
 
-  onDeleteClick(): void {
-    const dialogRef = this.dialog.open(DeleteModelComponent, {
+  editSalesRep(productId: string) {
+    // Fetch sales rep data based on salesRepId
+    // const salesRepData = /* fetch sales rep data */;
+    const userData = this.products.find(product => product.id === productId);
+    if (userData) {
+      const dialogRef = this.dialog.open(EditProductComponent, {
+        width: '400px', // adjust as needed
+        data: userData, // pass user data to modal
+      });
+      console.log(userData)
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        // Handle modal close event if needed
+      });
+    } else {
+      console.error('User not found');
+      // Handle case where user data is not found
+    }
+
+  }
+
+  onDeleteClick(productId: string): void {
+    const dialogRef = this.dialog.open(DeleteProductComponent, {
       width: '250px',
-      data: { message: 'Are you sure you want to delete this item?' }
+      data: { message: 'Are you sure you want to delete this item?', productId: productId }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -87,6 +99,4 @@ editSalesRep(userId: string) {
       }
     });
   }
-
-
 }

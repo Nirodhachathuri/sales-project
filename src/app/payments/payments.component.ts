@@ -15,8 +15,9 @@ export class PaymentsComponent implements OnInit {
   users: any[] = [];
   selectedUserName: string = '';
   selectedSalesArea: string = '';
-  dtOptions: DataTables.Settings = {};
+  
   salesAreas: string[] = []; 
+  dtOptions: { pagingType: string; };
   constructor( private data: AuthService,private dialog: MatDialog) {}
 
   ngOnInit():void {

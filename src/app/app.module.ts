@@ -26,11 +26,19 @@ import { ToastrModule } from 'ngx-toastr';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import {MatDialogModule} from '@angular/material/dialog';
 import { ModelComponent } from './model/model.component';
-import { DeleteModelComponent } from './delete-model/delete-model.component';
+import { DeleteModelComponent } from './users/user/delete-model/delete-model.component';
 import { CustomerComponent } from './customer/customer.component';
 import { OrdersComponent } from './orders/orders.component';
 import { PaymentsComponent } from './payments/payments.component';
 import { InventoryComponent } from './inventory/inventory.component';
+import { UserComponent, ViewUserComponent } from './users/user/user.component';
+import { UserModelComponent } from './users/user/user-model/user-model.component';
+import { MatSelectModule } from '@angular/material/select';
+import { EditUserModelComponent } from './users/user/edit-user-model/edit-user-model.component';
+import { ProductNewComponent,EditProductComponent,DeleteProductComponent} from './inventory/product-new/product-new.component';
+import { SalesComponent, SalesDeleteComponent, SalesEditComponent } from './dashboard/sales/sales.component';
+
+
 
 @NgModule({
   declarations: [
@@ -43,7 +51,17 @@ import { InventoryComponent } from './inventory/inventory.component';
     CustomerComponent,
     OrdersComponent,
     PaymentsComponent,
-    InventoryComponent
+    InventoryComponent,
+    UserComponent,
+    UserModelComponent,
+    EditUserModelComponent,
+    ViewUserComponent,
+    ProductNewComponent,
+    EditProductComponent,
+    DeleteProductComponent,
+    SalesComponent,
+    SalesEditComponent,
+    SalesDeleteComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +79,10 @@ import { InventoryComponent } from './inventory/inventory.component';
     MatIconModule,
     MatToolbarModule,
     MatListModule,
+    MatSelectModule,
     MatTableModule,
+    MatButtonModule,
+    MatCheckboxModule,
     DataTablesModule,
     HttpClientModule,
     ToastrModule.forRoot(),

@@ -1,0 +1,43 @@
+<div class="container">
+    <app-navigation></app-navigation>
+    <div class="content">
+        <div class="card" style="width: 100%">
+            <h1 style="font-weight: bold; text-align: center; margin-top: 30px;">Users</h1>
+            <div class="card-header">
+                
+                <select class="form-select" [(ngModel)]="selectedUserName" (change)="getAllUsers()">
+                    <option value="">Select User Name</option>
+                    <option *ngFor="let user of users$" [value]="user.name">{{ user.name }}</option>
+                  </select>&nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                <button class="new-customer-btn btn btn-success" (click)="openCreateModal()">+&nbsp;&nbsp;Users</button>
+            </div>
+            <div class="card-body">
+                <table datatable [dtOptions]="dtOptions" class="row-border hover table table-striped table-bordered">
+                    <thead class="bg-dark text-white">
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>User Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of users">
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.username }}</td>
+                            <td style="width: 30%" class="mat-icon-cell">
+                                <a (click)="editSalesRep(user.id)"><mat-icon>edit</mat-icon></a> |
+                                <a (click)="onDeleteClick(user.id)"><mat-icon>delete</mat-icon></a> |
+                                <a (click)="viewSalesRep(user.id)"><mat-icon>visibility</mat-icon></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>

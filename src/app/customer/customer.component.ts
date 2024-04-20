@@ -3,6 +3,7 @@ import { DeleteModelComponent } from '../delete-model/delete-model.component';
 import { ModelComponent } from '../model/model.component';
 import { AuthService } from '../service/auth.service';
 import { MatDialog } from '@angular/material/dialog';
+import * as DataTables from 'datatables.net';
 
 @Component({
   selector: 'app-customer',
@@ -15,15 +16,19 @@ export class CustomerComponent implements OnInit {
   users: any[] = [];
   selectedUserName: string = '';
   selectedSalesArea: string = '';
-  dtOptions: DataTables.Settings = {};
+  dtOptions: any = {
+    pagingType: 'full_numbers',
+    lengthMenu: [10, 25, 50, 100]
+    // Add other DataTables options as needed
+  };
   salesAreas: string[] = []; 
-  constructor( private data: AuthService,private dialog: MatDialog) {}
+    constructor( private data: AuthService,private dialog: MatDialog) {}
 
   ngOnInit():void {
-    this.dtOptions = {
-      pagingType: 'simple_numbers',
+    // this.dtOptions = {
+    //   pagingType: 'simple_numbers',
      
-    };
+    // };
 
     this.salesAreas = ['Area 1', 'Area 2', 'Area 3']; // Example sales areas
     this.fetchData();

@@ -1,0 +1,44 @@
+<form [formGroup]="userForm" (ngSubmit)="save()">
+    <h1>Edit System User </h1>
+  
+    <div class="form-row">
+      <div class="form-column">
+        <mat-form-field>
+          <mat-label>Product Name</mat-label>
+          <input matInput formControlName="productname" id="productname" name="productname" [value]="userData.productname">
+        </mat-form-field>
+      </div>
+  
+      <div class="form-column">
+        <mat-form-field>
+          <mat-label>Price</mat-label>
+          <input matInput formControlName="price" id="price" name="price"[value]="userData.price">
+        </mat-form-field>
+      </div>
+    </div>
+  
+    <div class="form-row">
+      <div class="form-column">
+        <mat-form-field>
+          <mat-label>Quantity</mat-label>
+          <input matInput formControlName="quantity" id="quantity" name="quantity" [value]="userData.quantity">
+        </mat-form-field>
+      </div>
+      <!-- <div class="form-column">
+        <mat-form-field>
+            <mat-label>User Type</mat-label>
+            <mat-select formControlName="usertype" id="usertype" name="usertype" [value]="userData.usertype">
+              <mat-option value="admin">Admin</mat-option>
+              <mat-option value="salesRep">Sales Rep</mat-option>
+              <mat-option value="accountAdmin">Account Admin</mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div> -->
+    </div>
+  
+    <div class="button-container">
+      <button mat-button color="primary" type="submit" [disabled]="!userForm.dirty">Edit</button>
+      <button mat-button color="warn" type="button" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+  

@@ -6,15 +6,15 @@
             <div class="card-header">
                 
                 <select class="form-select" [(ngModel)]="selectedUserName" (change)="fetchData()">
-                    <option value="">Select User Name</option>
+                    <option value="">Select Owner Name</option>
                     <option *ngFor="let user of users" [value]="user.name">{{ user.name }}</option>
-                </select>
+                </select>&nbsp;&nbsp;&nbsp;&nbsp;
                 <!-- Dropdown for Sales Area -->
                 <select class="form-select" [(ngModel)]="selectedSalesArea" (change)="fetchData()">
                     <option value="">Select Sales Area</option>
                     <option *ngFor="let area of salesAreas" [value]="area">{{ area }}</option>
-                </select>
-                <button class="btn btn-success" (click)="openCreateModal()">+&nbsp;&nbsp;&nbsp;New Customer</button>
+                </select>&nbsp;&nbsp;&nbsp;&nbsp;
+                <button class="new-customer-btn btn btn-success" (click)="openCreateModal()">+&nbsp;&nbsp;Customer</button>
             </div>
             <div class="card-body">
                 <table datatable [dtOptions]="dtOptions" class="row-border hover table table-striped table-bordered">

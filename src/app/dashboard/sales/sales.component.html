@@ -1,0 +1,44 @@
+<form [formGroup]="saleRepForm" (ngSubmit)="save()">
+    <h1>Add New Sales Person </h1>
+  
+    <div class="form-row">
+      <div class="form-column">
+        <mat-form-field>
+          <mat-label>Sales Person Name</mat-label>
+          <input matInput formControlName="salesname" id="salesname" name="salesname">
+        </mat-form-field>
+      </div>
+  
+      <div class="form-column">
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" id="email" name="email">
+        </mat-form-field>
+      </div>
+    </div>
+  
+    <div class="form-row">
+      <div class="form-column">
+        <mat-form-field>
+          <mat-label>Contact Number</mat-label>
+          <input matInput formControlName="cnumber" id="cnumber" name="cnumber">
+        </mat-form-field>
+      </div>
+      
+      <div class="form-column">
+        <mat-form-field>
+          <mat-label>Sales Area</mat-label>
+          <mat-select formControlName="city">
+            <mat-option *ngFor="let city of cities" [value]="city">{{ city }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  
+    <div class="button-container">
+      <button mat-button color="primary" type="submit">Save</button>
+      <button mat-button color="warn" type="button" (click)="cancel()">Cancel</button>
+    </div>
+    
+   
+  </form>

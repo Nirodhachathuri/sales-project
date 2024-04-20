@@ -4,17 +4,15 @@
         <div class="card" style="width: 100%">
             <h1 style="font-weight: bold; text-align: center; margin-top: 30px;">Payments</h1>
             <div class="card-header">
-                
                 <select class="form-select" [(ngModel)]="selectedUserName" (change)="fetchData()">
-                    <option value="">Select Shop Name</option>
+                    <option value="">Shop Name</option>
                     <option *ngFor="let user of users" [value]="user.name">{{ user.name }}</option>
-                </select>
+                </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <!-- Dropdown for Sales Area -->
                 <select class="form-select" [(ngModel)]="selectedSalesArea" (change)="fetchData()">
-                    <option value="">Select Date</option>
+                    <option value="">Date</option>
                     <option *ngFor="let area of salesAreas" [value]="area">{{ area }}</option>
                 </select>
-                <button class="btn btn-success" (click)="openCreateModal()">+&nbsp;&nbsp;Add Sales Reps</button>
             </div>
             <div class="card-body">
                 <table datatable [dtOptions]="dtOptions" class="row-border hover table table-striped table-bordered">
@@ -40,18 +38,6 @@
                     </tbody>
                 </table>
             </div>
-
         </div>
     </div>
 </div>
-
-<ng-template #content let-c="close" let-d="dismiss">
-	<div class="modal-header">
-		<h4 class="modal-title" id="modal-basic-title">Preview Invoice : <b></b></h4>
-		<button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
-	</div>
-	
-	<div class="modal-footer">
-		<button type="button" class="btn btn-danger" (click)="d('Cross click')">Close</button>
-	</div>
-</ng-template>
