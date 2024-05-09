@@ -51,8 +51,6 @@ export class SalesComponent implements OnInit {
   ngOnInit(): void {}
   
   save(): void {
-  
-
       if (this.saleRepForm.valid) {
         const formData = this.saleRepForm.value; // Get the form values
         // Call your service method to save the data
@@ -90,10 +88,11 @@ export class SalesComponent implements OnInit {
   styleUrls: ['./sales.component.css']
 })
 export class SalesDeleteComponent implements OnInit {
+ 
 
   constructor(
     public dialogRef: MatDialogRef<SalesDeleteComponent>,
-    private productService:ProductService,
+    private salesService:SalesService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
   ngOnInit(): void {
@@ -106,10 +105,10 @@ export class SalesDeleteComponent implements OnInit {
 
   onConfirmClick(): void {
     
-    let id = this.data.productId;
+    let id = this.data.salesRepId;
     console.log(id)
     // Call the userService method to archive the user data
-    this.productService.archiveProduct(id).subscribe(
+    this.salesService.archiveSales(id).subscribe(
       () => {
 
         console.log(this.data)
@@ -132,9 +131,90 @@ export class SalesDeleteComponent implements OnInit {
 })
 export class SalesEditComponent implements OnInit {
 
-  constructor() { }
+  salesForm: FormGroup;
+  cities = ['Colombo',
+  'Kandy',
+  'Galle',
+  'Jaffna',
+  'Matara',
+  'Negombo',
+  'Anuradhapura',
+  'Polonnaruwa',
+  'Trincomalee',
+  'Batticaloa',
+  'Ratnapura',
+  'Kurunegala',
+  'Badulla',
+  'Nuwara Eliya',
+  'Kalutara',
+  'Gampaha',
+  'Hambantota',
+  'Ampara',
+  'Mannar',
+  'Puttalam',
+  'Kegalle',
+  'Vavuniya',
+  'Kilinochchi',
+  'Mullaitivu',
+  'Monaragala']; // Add more cities as needed
+  
+  constructor(@Inject(MAT_DIALOG_DATA) public salesData: any,
+  private dialogRef: MatDialogRef<SalesEditComponent>,
+  private salesService: SalesService,
+  private formBuilder: FormBuilder) { 
+    this.salesForm = this.formBuilder.group({
+      salesName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      cnumber: ['', Validators.required],
+      city:['',Validators.required],
+    });
+    }
+    ngOnInit(): void {
+      this.initForm();
+      this.populateForm();
+    }
 
-  ngOnInit(): void {
-  }
+    
+  
+    initForm(): void {
+      this.salesForm = this.formBuilder.group({
+        id:[''],
+        salesName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      cnumber: ['', Validators.required],
+      city: [this.salesData.salesArea, Validators.required], 
+      });
+    }
+  
+    populateForm(): void {
+      // Populate the form with user data
+      this.salesForm.patchValue({
+        id: this.salesData.id,
+        salesName: this.salesData.salesName,
+      email: this.salesData.email,
+      cnumber: this.salesData.cnumber,
+      city:this.salesData.salesArea
+      });
+    }
+    save(): void {
+      const updatedSalesData = this.salesForm.value;
+    
+      this.salesService.updateSales(updatedSalesData).subscribe(
+        () => {
+          
+    
+          // Close the dialog
+          this.dialogRef.close();
+        },
+        error => {
+          console.error('Error updating sales person:', error);
+          // Handle error
+        }
+      );
+    }
+    
+ cancel(){
+  this.dialogRef.close();
+ }
 
 }

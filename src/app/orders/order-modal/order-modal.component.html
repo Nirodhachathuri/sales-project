@@ -1,0 +1,43 @@
+<form [formGroup]="orderForm" (ngSubmit)="save()">
+    <h1>Add New Customer</h1>
+
+    <div class="form-row">
+        <div class="form-column">
+            <mat-form-field>
+                <mat-label>Product</mat-label>
+                <mat-select formControlName="product" (selectionChange)="onProductChange($event.value)">
+                    <mat-option *ngFor="let product of products" [value]="product.id">
+                        {{ product.productname }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="form-column">
+            <mat-form-field>
+                <mat-label>Quantity</mat-label>
+                <input matInput formControlName="quantity" type="number">
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-column">
+            <!-- Non-required input field -->
+            <mat-form-field>
+                <mat-label>Note</mat-label>
+                <input matInput formControlName="note">
+            </mat-form-field>
+        </div>
+        <div class="form-column">
+            <mat-label>Total Price</mat-label>
+                <input matInput formControlName="note" value=" {{ totalPrice }}">
+        </div>
+    </div>
+
+
+    <div class="button-container">
+        <button mat-button color="primary" type="submit">Save</button>
+        <button mat-button color="warn" type="button" (click)="cancel()">Cancel</button>
+    </div>
+</form>

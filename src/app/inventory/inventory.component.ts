@@ -1,7 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { DeleteModelComponent } from '../delete-model/delete-model.component';
-import { ModelComponent } from '../model/model.component';
-import { AuthService } from '../service/auth.service';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteProductComponent, EditProductComponent, ProductNewComponent } from './product-new/product-new.component';
 import { ProductService } from '../service/product.service';
@@ -26,7 +23,16 @@ export class InventoryComponent implements OnInit {
   
   
   constructor(private productService: ProductService, private dialog: MatDialog) { }
-
+  iconSize: string;
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    // Adjust icon size based on screen width
+    if (window.innerWidth < 768) {
+      this.iconSize = 'small'; // Set small icon size for smaller screens
+    } else {
+      this.iconSize = 'default'; // Set default icon size for larger screens
+    }
+  }
   ngOnInit(): void {
     
     

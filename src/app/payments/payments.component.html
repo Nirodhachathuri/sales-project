@@ -18,21 +18,23 @@
                 <table datatable [dtOptions]="dtOptions" class="row-border hover table table-striped table-bordered">
                     <thead class="bg-dark text-white">
                         <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Website</th>
+                            <th>Order Id</th>
+                            <th>Price</th>
+                            <th>Shop Name</th>
+                            <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let user of users$">
-                            <td>{{ user.name }}</td>
-                            <td>{{ user.email }}</td>
-                            <td>{{ user.website }}</td>
-                            <td style="width: 30%">
-                                <a (click)="editSalesRep(user.id)"><mat-icon>edit</mat-icon></a> |
-                                <a (click)="onDeleteClick()"><mat-icon>delete</mat-icon></a> |
-                                <a><mat-icon>visibility</mat-icon></a>
+                            <td>{{ user.orderId }}</td>
+                            <td>{{ user.Order?.price }}</td>
+                            <td>{{ user.Customer?.shopName }}</td>
+                            <td>{{ user.status }}</td>
+                            <td style="width: 30%"> 
+                                <!-- (click)="editSalesRep(user.id)" -->
+                                <a (click)="editPayment(user.id)"><mat-icon [ngStyle]="{'font-size': iconSize}">edit</mat-icon></a> |
+                                <a><mat-icon [ngStyle]="{'font-size': iconSize}">visibility</mat-icon></a>
                             </td>
                         </tr>
                     </tbody>

@@ -3,44 +3,80 @@
     <div class="content">
         <div class="card" style="width: 100%">
             <h1 style="font-weight: bold; text-align: center; margin-top: 30px;">Orders</h1>
-            <div class="card-header">
-                
-                <select class="form-select" [(ngModel)]="selectedUserName" (change)="fetchData()">
-                    <option value="">Select User Name</option>
-                    <option *ngFor="let user of users" [value]="user.name">{{ user.name }}</option>
-                </select>
-                <!-- Dropdown for Sales Area -->
-                <select class="form-select" [(ngModel)]="selectedSalesArea" (change)="fetchData()">
-                    <option value="">Select Sales Area</option>
-                    <option *ngFor="let area of salesAreas" [value]="area">{{ area }}</option>
-                </select>
-                <button class="new-customer-btn btn btn-success" (click)="openCreateModal()">+&nbsp;&nbsp;Order</button>
-            </div>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#ongoing">Ongoing Orders</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#delivered">Delivered Orders</a>
+                </li>
+            </ul>
+            
             <div class="card-body">
-                <table datatable [dtOptions]="dtOptions" class="row-border hover table table-striped table-bordered">
-                    <thead class="bg-dark text-white">
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Website</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let user of users$">
-                            <td>{{ user.name }}</td>
-                            <td>{{ user.email }}</td>
-                            <td>{{ user.website }}</td>
-                            <td style="width: 30%">
-                                <a (click)="editSalesRep(user.id)"><mat-icon>edit</mat-icon></a> |
-                                <a (click)="onDeleteClick()"><mat-icon>delete</mat-icon></a> |
-                                <a><mat-icon>visibility</mat-icon></a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="tab-content">
+                    <!-- Ongoing Orders Tab -->
+                    <div id="ongoing" class="tab-pane fade show active">
+                        <div class="card-header">
+                            <!-- Dropdown for selecting user name -->
+                            <select class="form-select" [(ngModel)]="selectedShopName" (change)="onShopSelect()">
+                                <option value="">Select Shop</option>
+                                <option *ngFor="let order of orders" [value]="order.shopName">{{ order.shopName }}</option>
+                            </select>
+                            <!-- Button is only visible when a shop name is selected -->
+                            <button class="new-customer-btn btn btn-success" *ngIf="isShopSelected" (click)="openCreateModal()">+&nbsp;&nbsp;Order</button>
+                        </div><br>
+                        <table datatable [dtOptions]="dtOptions" class="row-border hover table table-striped table-bordered">
+                            <thead class="bg-dark text-white">
+                                <tr>
+                                    <th>Shop Name</th>
+                                    <th>Product Name</th>
+                                    <th>Quantity</th>
+                                    <th>Special Note</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let user of ongoingOrders">
+                                    <td>{{ user.shopName }}</td>
+                                    <td>{{ user.productName }}</td>
+                                    <td>{{ user.quantity }}</td>
+                                    <td>{{ user.status }}</td>
+                                    <td style="width: 30%">
+                                        <a ><mat-icon (click)="editOrder(user.id)" [ngStyle]="{'font-size': iconSize}">edit</mat-icon></a> |
+                                        <a ><mat-icon (click)="onDeleteClick(user.id)" [ngStyle]="{'font-size': iconSize}">delete</mat-icon></a> |
+                                        <a><mat-icon>visibility</mat-icon></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Delivered Orders Tab -->
+                    <div id="delivered" class="tab-pane fade">
+                        <table datatable [dtOptions]="dtOptions" class="row-border hover table table-striped table-bordered">
+                            <thead class="bg-dark text-white">
+                                <tr>
+                                    <th>Shop Name</th>
+                                    <th>Product Name</th>
+                                    <th>Quantity</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let user of deliveredOrders">
+                                    <td>{{ user.shopName }}</td>
+                                    <td>{{ user.productName }}</td>
+                                    <td>{{ user.quantity }}</td>
+                                    <!-- <td style="width: 30%">
+                                        <a (click)="editOrder(user.id)"><mat-icon>edit</mat-icon></a> |
+                                        <a (click)="onDeleteClick(user.id)"><mat-icon>delete</mat-icon></a> |
+                                        <a><mat-icon>visibility</mat-icon></a>
+                                    </td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-
         </div>
     </div>
 </div>

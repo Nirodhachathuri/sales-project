@@ -9,12 +9,33 @@ export class SalesService {
 
   constructor(private http : HttpClient) { }
 
-  archiveSales(productId: string): Observable<any> {
-    const url = `http://localhost:3000/api/products/archive/${productId}`;
+  archiveSales(saleId: string): Observable<any> {
+
+    // const url = `http://localhost:3000/api/sales/archive/${saleId}`;
+
+    const url = `https://sfa.369dubai.com/api/sales/archive/${saleId}`;
     return this.http.put<any>(url, {});
   }
 
-  saveSalesDetails(userDetails: any): Observable<any> {
-    return this.http.post<any>(`http://localhost:3000/api/product-add`, userDetails);
+  saveSalesDetails(saleDetails: any): Observable<any> {
+
+    // const url = `http://localhost:3000/api/sales-add`;
+
+    const url = `https://sfa.369dubai.com/api/sales-add`;
+
+    return this.http.post<any>(url, saleDetails);
+  }
+
+  getAllSales(): Observable<any[]> {
+    // const url = `http://localhost:3000/api/get-sales`;
+    const url = `https://sfa.369dubai.com/api/get-sales`;
+    return this.http.get<any[]>(url);
+  }
+
+  updateSales(salesData: any): Observable<any> {
+    const saleId = salesData.id;
+    // const url = `http://localhost:3000/api/sales/${saleId}`;
+    const url = `https://sfa.369dubai.com/api/sales/${saleId}`;
+    return this.http.put<any>(url, salesData);
   }
 }

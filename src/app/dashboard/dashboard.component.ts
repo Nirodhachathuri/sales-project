@@ -1,11 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import {AuthService} from '../service/auth.service'
-import { Subject } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
-import { ModelComponent } from '../model/model.component';
-import { DeleteModelComponent } from '../delete-model/delete-model.component';
-import * as DataTables from 'datatables.net';
-import { SalesComponent, SalesDeleteComponent } from './sales/sales.component';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { SalesComponent, SalesDeleteComponent, SalesEditComponent } from './sales/sales.component';
+import { SalesService } from '../service/sales.service';
+import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,8 +11,8 @@ import { SalesComponent, SalesDeleteComponent } from './sales/sales.component';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-  users$: any[] = [];
-  users: any[] = [];
+  sales$: any[] = [];
+  sales: any[] = [];
   selectedUserName: string = '';
   selectedSalesArea: string = '';
   dtOptions: any = {
@@ -23,7 +21,7 @@ export class DashboardComponent implements OnInit {
     // Add other DataTables options as needed
   };
   salesAreas: string[] = []; 
-    constructor( private data: AuthService,private dialog: MatDialog) {}
+    constructor( private salesService: SalesService,private dialog: MatDialog,private router:Router) {}
 
   ngOnInit():void {
     this.dtOptions = {
@@ -35,18 +33,18 @@ export class DashboardComponent implements OnInit {
     this.fetchData();
   };
 fetchData(){
-  this.data.getSampleData().subscribe(data => {
-    this.users$ = data;
-    this.users = data;
+  this.salesService.getAllSales().subscribe(data => {
+    this.sales$ = data;
+    this.sales = data;
   });
-   const filteredUsers = this.filteredData();
-   this.users$ = filteredUsers;
+   const filteredSales = this.filteredData();
+   this.sales$ = filteredSales;
 }
 
 filteredData(){
-  return this.users$.filter(user => {
-    return (!this.selectedUserName || user.name === this.selectedUserName) &&
-           (!this.selectedSalesArea || user.salesArea === this.selectedSalesArea);
+  return this.sales$.filter(sale => {
+    return (!this.selectedUserName || sale.name === this.selectedUserName) &&
+           (!this.selectedSalesArea || sale.salesArea === this.selectedSalesArea);
   });
 }
 openCreateModal() {
@@ -57,28 +55,37 @@ openCreateModal() {
   dialogRef.afterClosed().subscribe(result => {
     console.log(result);
   });
+
+  this.refreshPage();
 }
 
-editSalesRep(userId: string) {
+editSalesRep(salesId: string) {
   // Fetch sales rep data based on salesRepId
   // const salesRepData = /* fetch sales rep data */;
-  this.data.getSampleDataId(userId).subscribe(userData=> {
-    const dialogRef = this.dialog.open(ModelComponent, {
-      width: '400px', // adjust as needed
-      data: userData, // pass sales rep data to modal
-    });
+  
+  
+  const salesData = this.sales.find(product => product.id === salesId);
+    if (salesData) {
+      const dialogRef = this.dialog.open(SalesEditComponent, {
+        width: '400px', // adjust as needed
+        data: salesData, // pass user data to modal
+      });
+      console.log(salesData)
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        // Handle modal close event if needed
+      });
+    } else {
+      console.error('User not found');
+      // Handle case where user data is not found
+    }
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      // Handle modal close event if needed
-    });
-  });
   }
 
-  onDeleteClick(): void {
+  onDeleteClick(salesRepId:string): void {
     const dialogRef = this.dialog.open(SalesDeleteComponent, {
       width: '250px',
-      data: { message: 'Are you sure you want to delete this item?' }
+      data: { message: 'Are you sure you want to delete this item?', salesRepId: salesRepId }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -92,5 +99,99 @@ editSalesRep(userId: string) {
         console.log('Deletion cancelled');
       }
     });
+
+    this.refreshPage();
   }
+
+  refreshPage() {
+    // Navigate to the current route
+    this.router.navigateByUrl('/refresh', { skipLocationChange: true }).then(() => {
+        this.router.navigate([this.router.url]);
+    });
+}
+viewSalesRep(saleId: string) {
+  // Find the user with the specified userId
+  const salesData = this.sales.find(sale => sale.id === saleId);
+
+  // If user data is found
+  if (salesData) {
+    const dialogRef = this.dialog.open(ViewSalesComponent, {
+      width: '400px', // adjust as needed
+      data: salesData, // pass user data to modal
+    });
+    console.log(salesData)
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // Handle modal close event if needed
+    });
+  } else {
+    console.error('User not found');
+    // Handle case where user data is not found
+  }
+}
+}
+
+@Component({
+  selector: 'app-view-sales',
+  templateUrl: './view-sales.component.html',
+  styleUrls: ['./dashboard.component.css']
+})
+export class ViewSalesComponent implements OnInit {
+  salesForm: FormGroup;
+  cities = ['Colombo',
+  'Kandy',
+  'Galle',
+  'Jaffna',
+  'Matara',
+  'Negombo',
+  'Anuradhapura',
+  'Polonnaruwa',
+  'Trincomalee',
+  'Batticaloa',
+  'Ratnapura',
+  'Kurunegala',
+  'Badulla',
+  'Nuwara Eliya',
+  'Kalutara',
+  'Gampaha',
+  'Hambantota',
+  'Ampara',
+  'Mannar',
+  'Puttalam',
+  'Kegalle',
+  'Vavuniya',
+  'Kilinochchi',
+  'Mullaitivu',
+  'Monaragala']; // Add more cities as needed
+  
+  constructor(@Inject(MAT_DIALOG_DATA) public salesData: any,
+  private formBuilder: FormBuilder,private dialogRef: MatDialogRef<ViewSalesComponent>,) { }
+
+  ngOnInit(): void {
+    this.initForm();
+    this.populateForm();
+  }
+  initForm(): void {
+    this.salesForm = this.formBuilder.group({
+      id:[''],
+      salesName: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    cnumber: ['', Validators.required],
+    city: [this.salesData.salesArea, Validators.required], 
+    });
+  }
+
+  populateForm(): void {
+    // Populate the form with user data
+    this.salesForm.patchValue({
+      id: this.salesData.id,
+      salesName: this.salesData.salesName,
+    email: this.salesData.email,
+    cnumber: this.salesData.cnumber,
+    city:this.salesData.salesArea
+    });
+  }
+  cancel(){
+    this.dialogRef.close();
+   }
 }

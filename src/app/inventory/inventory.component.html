@@ -29,8 +29,8 @@
                             <td>{{ product.price }}</td>
                             <td>{{ product.quantity }}</td>
                             <td style="width: 30%">
-                                <a (click)="editSalesRep(product.id)"><mat-icon>edit</mat-icon></a> |
-                                <a (click)="onDeleteClick(product.id)"><mat-icon>delete</mat-icon></a>
+                                <a (click)="editSalesRep(product.id)"><mat-icon [ngStyle]="{'font-size': iconSize}">edit</mat-icon></a> |
+                                <a (click)="onDeleteClick(product.id)"><mat-icon [ngStyle]="{'font-size': iconSize}">delete</mat-icon></a>
                                 <!-- <a><mat-icon>visibility</mat-icon></a> -->
                             </td>
                         </tr>

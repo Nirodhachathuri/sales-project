@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
       .subscribe(response => {
         // Handle the response from the backend
         console.log('Login successful:', response);
-        this.router.navigate(['/user']);
+        this.router.navigate(['/customers']);
         // Optionally, redirect the user to another page
       }, error => {
         console.error('Error logging in:', error);

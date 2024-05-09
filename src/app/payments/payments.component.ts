@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { DeleteModelComponent } from '../delete-model/delete-model.component';
-import { ModelComponent } from '../model/model.component';
-import { AuthService } from '../service/auth.service';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { PaymentService } from '../service/payment.service';
+import { PaymentModalComponent } from './payment-modal/payment-modal.component';
+
 
 @Component({
   selector: 'app-payments',
@@ -15,10 +15,22 @@ export class PaymentsComponent implements OnInit {
   users: any[] = [];
   selectedUserName: string = '';
   selectedSalesArea: string = '';
-  
+
+
   salesAreas: string[] = []; 
   dtOptions: { pagingType: string; };
-  constructor( private data: AuthService,private dialog: MatDialog) {}
+  constructor( private paymentService: PaymentService,private dialog: MatDialog) {}
+
+  iconSize: string;
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    // Adjust icon size based on screen width
+    if (window.innerWidth < 768) {
+      this.iconSize = 'small'; // Set small icon size for smaller screens
+    } else {
+      this.iconSize = 'default'; // Set default icon size for larger screens
+    }
+  }
 
   ngOnInit():void {
     this.dtOptions = {
@@ -30,64 +42,43 @@ export class PaymentsComponent implements OnInit {
     this.fetchData();
   };
 fetchData(){
-  this.data.getSampleData().subscribe(data => {
+  this.paymentService.getAllPayments().subscribe(data => {
     this.users$ = data;
     this.users = data;
+    console.log(data)
   });
-   const filteredUsers = this.filteredData();
-   this.users$ = filteredUsers;
+  //  const filteredUsers = this.filteredData();
+  //  this.users$ = filteredUsers;
 }
 
-filteredData(){
-  return this.users$.filter(user => {
-    return (!this.selectedUserName || user.name === this.selectedUserName) &&
-           (!this.selectedSalesArea || user.salesArea === this.selectedSalesArea);
-  });
-}
-openCreateModal() {
-  const dialogRef = this.dialog.open(ModelComponent, {
-    width: '400px', // Adjust the width as needed
-  });
+// filteredData(){
+//   return this.users$.filter(user => {
+//     return (!this.selectedUserName || user.name === this.selectedUserName) &&
+//            (!this.selectedSalesArea || user.salesArea === this.selectedSalesArea);
+//   });
+// }
 
-  dialogRef.afterClosed().subscribe(result => {
-    console.log(result);
-  });
-}
-
-editSalesRep(userId: string) {
+editPayment(paymentId: string) {
   // Fetch sales rep data based on salesRepId
   // const salesRepData = /* fetch sales rep data */;
-  this.data.getSampleDataId(userId).subscribe(userData=> {
-    const dialogRef = this.dialog.open(ModelComponent, {
+  console.log(this.users)
+  const paymentData = this.users.find(payment => payment.id === paymentId);
+  if (paymentData) {
+    const dialogRef = this.dialog.open(PaymentModalComponent, {
       width: '400px', // adjust as needed
-      data: userData, // pass sales rep data to modal
+      data: paymentData, // pass user data to modal
     });
-
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       // Handle modal close event if needed
     });
-  });
+  } else {
+    console.error('User not found');
+    // Handle case where user data is not found
   }
 
-  onDeleteClick(): void {
-    const dialogRef = this.dialog.open(DeleteModelComponent, {
-      width: '250px',
-      data: { message: 'Are you sure you want to delete this item?' }
-    });
+}
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        // User confirmed deletion, handle delete action
-        // For example:
-        // this.deleteItem();
-        console.log('Item deleted');
-      } else {
-        // User cancelled deletion
-        console.log('Deletion cancelled');
-      }
-    });
-  }
 
 
 }

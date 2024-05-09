@@ -1,0 +1,77 @@
+<form [formGroup]="customerForm" (ngSubmit)="save()">
+  <h1>Edit System User </h1>
+
+  <div class="form-row">
+    <div class="form-column">
+      <mat-form-field>
+        <mat-label>Sale's Person Name</mat-label>
+        <input matInput formControlName="cuname" id="cuname" name="cuname" [value]="customerData.customerName">
+      </mat-form-field>
+    </div>
+
+    <div class="form-column">
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" id="email" name="email" [value]="customerData.email">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-column">
+      <mat-form-field>
+        <mat-label>Contact Number</mat-label>
+        <input matInput formControlName="cnumber" id="cnumber" name="cnumber" [value]="customerData.cnumber">
+      </mat-form-field>
+    </div>
+
+    <div class="form-column">
+      <mat-form-field>
+        <mat-label>Sales Area</mat-label>
+        <mat-select formControlName="city" [value]="customerData.salesArea"
+          (selectionChange)="onSalesAreaChange($event.value)">
+          <mat-option *ngFor="let city of cities" [value]="city">{{ city }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-column">
+      <mat-form-field>
+        <mat-label>Shop Name</mat-label>
+        <input matInput formControlName="shopName" id="shopName" name="shopName" [value]="customerData.shopName">
+      </mat-form-field>
+    </div>
+
+    <div class="form-column">
+      <mat-form-field>
+        <mat-label>Address</mat-label>
+        <input matInput formControlName="address" id="address" name="address" [value]="customerData.address">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-column">
+  
+      <div class="form-row">
+        <div class="form-column">
+          <mat-form-field>
+            <mat-label>Sales Person</mat-label>
+            <mat-select formControlName="salesRep">
+              <mat-option *ngFor="let person of salesPersons" [value]="person.id">
+                {{ person.salesName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+  
+  <div class="button-container">
+    <button mat-button color="primary" type="submit" [disabled]="!customerForm.dirty">Edit</button>
+    <button mat-button color="warn" type="button" (click)="cancel()">Cancel</button>
+  </div>
+</form>

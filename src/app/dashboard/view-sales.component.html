@@ -1,5 +1,5 @@
-<form [formGroup]="salesForm" (ngSubmit)="save()">
-    <h1>Edit System User </h1>
+<form [formGroup]="salesForm">
+    <h1>Sale Person </h1>
   
     <div class="form-row">
       <div class="form-column">
@@ -36,8 +36,8 @@
     </div>
   
     <div class="button-container">
-      <button mat-button color="primary" type="submit" [disabled]="!salesForm.dirty">Edit</button>
-      <button mat-button color="warn" type="button" (click)="cancel()">Cancel</button>
+      
+      <button mat-button color="warn" type="button" (click)="cancel()">Ok</button>
     </div>
   </form>
   

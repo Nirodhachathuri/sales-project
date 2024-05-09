@@ -3,6 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { AuthService } from '../service/auth.service';
+import { NotificationService } from '../service/notification.service';
 
 @Component({
   selector: 'app-navigation',
@@ -11,13 +12,14 @@ import { AuthService } from '../service/auth.service';
 })
 export class NavigationComponent {
   sidenavWidth: string = '250px';
+  notificationsCount: number = 0;
   isHandset$ = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches)
     );
 
-  constructor(private breakpointObserver: BreakpointObserver,private authService: AuthService) {} // Corrected BreakpointObserver import
-  
+  constructor(private notificationService:NotificationService,private breakpointObserver: BreakpointObserver,private authService: AuthService) {} // Corrected BreakpointObserver import
+  userType: string; 
   // Logout function
   logout() {
     this.authService.logout(); // Call the logout method from your authentication service
@@ -36,5 +38,13 @@ export class NavigationComponent {
         this.sidenavWidth = '1440px';
       }
     });
+
+    this.userType = this.authService.getUserType(); // Method to retrieve user's type from AuthService
+    this.notificationService.notifications.subscribe(notifications => {
+      this.notificationsCount = notifications.length;
+  });
   }
+  showNotifications() {
+    // Add your logic to show notifications here
+}
 }

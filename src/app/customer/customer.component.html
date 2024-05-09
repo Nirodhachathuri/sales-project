@@ -7,7 +7,7 @@
                 
                 <select class="form-select" [(ngModel)]="selectedUserName" (change)="fetchData()">
                     <option value="">Select Owner Name</option>
-                    <option *ngFor="let user of users" [value]="user.name">{{ user.name }}</option>
+                    <option *ngFor="let customer of customers" [value]="customer.name">{{ customer.name }}</option>
                 </select>&nbsp;&nbsp;&nbsp;&nbsp;
                 <!-- Dropdown for Sales Area -->
                 <select class="form-select" [(ngModel)]="selectedSalesArea" (change)="fetchData()">
@@ -22,18 +22,18 @@
                         <tr>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Website</th>
+                            <th>Sales Area</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let user of users$">
-                            <td>{{ user.name }}</td>
-                            <td>{{ user.email }}</td>
-                            <td>{{ user.website }}</td>
+                        <tr *ngFor="let customer of customers$">
+                            <td>{{ customer.customerName }}</td>
+                            <td>{{ customer.email }}</td>
+                            <td>{{ customer.salesArea }}</td>
                             <td style="width: 30%">
-                                <a (click)="editSalesRep(user.id)"><mat-icon>edit</mat-icon></a> |
-                                <a (click)="onDeleteClick()"><mat-icon>delete</mat-icon></a> |
+                                <a (click)="editCustomer(customer.id)"><mat-icon [ngStyle]="{'font-size': iconSize}">edit</mat-icon></a> |
+                                <a (click)="onDeleteClick(customer.id)"><mat-icon [ngStyle]="{'font-size': iconSize}">delete</mat-icon></a> |
                                 <a><mat-icon>visibility</mat-icon></a>
                             </td>
                         </tr>
