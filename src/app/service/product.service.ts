@@ -6,24 +6,28 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ProductService {
+  private baseUrl: string;
 
-  constructor(private http: HttpClient) {}
-
-  saveProductDetails(userDetails: any): Observable<any> {
-    return this.http.post<any>(`http://localhost:3000/api/product-add`, userDetails);
+  constructor(private http: HttpClient) {
+    this.baseUrl = `http://localhost:3000/api`;
+    // this.baseUrl = `https://sale-backend.up.railway.app/api`;
   }
+
+  saveProductDetails(productDetails: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/product-add`, productDetails);
+  }
+
   updateProduct(productData: any): Observable<any> {
     const productId = productData.id;
-    return this.http.put<any>(`http://localhost:3000/api/products/${productId}`, productData);
+    return this.http.put<any>(`${this.baseUrl}/products/${productId}`, productData);
   }
 
   archiveProduct(productId: string): Observable<any> {
-    const url = `http://localhost:3000/api/products/archive/${productId}`;
+    const url = `${this.baseUrl}/products/archive/${productId}`;
     return this.http.put<any>(url, {});
   }
 
   getAllProducts(): Observable<any[]> {
-    return this.http.get<any[]>(`http://localhost:3000/api/get-products`);
+    return this.http.get<any[]>(`${this.baseUrl}/get-products`);
   }
-
 }

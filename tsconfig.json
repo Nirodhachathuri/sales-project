@@ -16,7 +16,7 @@
       "dom"
     ],
     "esModuleInterop": true,
-    "types": ["jquery"]
+    "types": ["jquery", "datatables.net"]
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

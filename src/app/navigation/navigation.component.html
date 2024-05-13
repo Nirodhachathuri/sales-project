@@ -4,27 +4,27 @@
         style="background-color: #6a68e2; font-family: 'Gilroy';" >
      
         <mat-nav-list style="margin-top: 100px; ">
-            <a mat-list-item routerLink="/user" style="margin-top: 30px;color: #fcfcfd;" *ngIf="userType === 'admin'">
+            <a mat-list-item routerLink="/user" style="margin-top: 30px;color: #fcfcfd;" >
                 <mat-icon style="color: #fcfcfd;">person</mat-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span style="margin-left: 10px; font-family: 'Gilroy';">User</span>
             </a>
-            <a mat-list-item routerLink="/dashboard" style="margin-top: 30px;color: #fcfcfd;" *ngIf="userType === 'admin'">
+            <a mat-list-item routerLink="/dashboard" style="margin-top: 30px;color: #fcfcfd;">
                 <mat-icon style="color: #fcfcfd;">dashboard</mat-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span style="margin-left: 10px; font-family: 'Gilroy';">Sales Reps</span>
             </a>
-            <a mat-list-item routerLink="/customers" style="margin-top: 30px;color: #fcfcfd;" *ngIf="userType === 'admin' || userType === 'salesRep'">
+            <a mat-list-item routerLink="/customers" style="margin-top: 30px;color: #fcfcfd;">
                 <mat-icon style="color: #fcfcfd;">people</mat-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span style="margin-left: 10px; font-family: 'Gilroy';">Customers</span>
             </a>
-            <a mat-list-item routerLink="/orders" style="margin-top: 30px;color: #fcfcfd;" *ngIf="userType === 'admin' || userType === 'salesRep'">
+            <a mat-list-item routerLink="/orders" style="margin-top: 30px;color: #fcfcfd;" >
                 <mat-icon style="color: #fcfcfd;">shopping_cart</mat-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span style="margin-left: 10px; font-family: 'Gilroy';">Orders</span>
             </a>
-            <a mat-list-item routerLink="/payments" style="margin-top:30px;color: #fcfcfd;" *ngIf="userType === 'admin' || userType === 'salesRep'">
+            <a mat-list-item routerLink="/payments" style="margin-top:30px;color: #fcfcfd;" >
                 <mat-icon style="color: #fcfcfd;">payments</mat-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span style="margin-left: 10px; font-family: 'Gilroy';">Payments</span>
             </a>
-            <a mat-list-item routerLink="/inventory" style="margin-top:30px;color: #fcfcfd;" *ngIf="userType === 'admin' || userType === 'account'">
+            <a mat-list-item routerLink="/inventory" style="margin-top:30px;color: #fcfcfd;">
                 <mat-icon style="color: #fcfcfd;">inventory</mat-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span style="margin-left: 10px; font-family: 'Gilroy';">Inventory</span>
             </a>

@@ -6,28 +6,30 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CustomerService {
-
-  constructor(private http : HttpClient) { }
+  private baseUrl: string;
+  constructor(private http : HttpClient) {
+    this.baseUrl = `http://localhost:3000/api`
+   }
 
   archiveCustomers(customerId: string): Observable<any> {
-    const url = `http://localhost:3000/api/customers/archive/${customerId}`;
+    const url = `${this.baseUrl}/customers/archive/${customerId}`;
     return this.http.put<any>(url, {});
   }
 
   saveCustomersDetails(customerDetails: any): Observable<any> {
-    return this.http.post<any>(`http://localhost:3000/api/customer-add`, customerDetails);
+    return this.http.post<any>(`${this.baseUrl}/customer-add`, customerDetails);
   }
 
   getAllSales(): Observable<any[]> {
-    return this.http.get<any[]>(`http://localhost:3000/api/get-sales`);
+    return this.http.get<any[]>(`${this.baseUrl}/get-sales`);
   }
 
   updateCustomers(customerData: any): Observable<any> {
     const customerId = customerData.id;
-    return this.http.put<any>(`http://localhost:3000/api/customer/${customerId}`, customerData);
+    return this.http.put<any>(`${this.baseUrl}/customer/${customerId}`, customerData);
   }
 
   getCustomersReps(): Observable<any[]> {
-    return this.http.get<any[]>('http://localhost:3000/api/getcustomers');
+    return this.http.get<any[]>(`${this.baseUrl}/getcustomers`);
   }
 }

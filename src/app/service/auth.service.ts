@@ -13,7 +13,7 @@ export class AuthService {
 
   private loggedIn = false;
   private userType: string | null = null;
-
+  private readonly baseUrl = 'http://localhost:3000/api';
   constructor(private router: Router, private http: HttpClient) { }
 
   getUser() {
@@ -32,7 +32,7 @@ export class AuthService {
 
 
   login(username: string, password: string): Observable<any> {
-    return this.http.post<any>('http://localhost:3000/api/login', { username, password })
+    return this.http.post<any>(`${this.baseUrl}/login`, { username, password })
       .pipe(
         tap(response => {
           if (response && response.userType) {
